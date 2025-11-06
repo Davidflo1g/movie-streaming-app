@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.w3-theme-d1 {
+    background-color: #0a0a0a !important;
+}
+
+.w3-theme-d3 {
+    background-color: #1a1a1a !important;
+}
+
+.w3-cyan {
+    background-color: #00bcd4 !important;
+    color: white !important;
+}
+
+.movie-card {
+    transition: transform 0.3s;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+}
