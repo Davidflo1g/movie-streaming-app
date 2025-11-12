@@ -34,6 +34,18 @@
             </div>
         </div>
 
+        <div class="w3-dropdown-hover w3-right">
+            <button class="w3-button w3-hover-cyan">Reviews</button>
+                 <div class="w3-dropdown-content w3-bar-block w3-border w3-card-4">
+                     <a href="reviews/addReview.php" class="w3-bar-item w3-button">Add Review</a>
+                     <a href="reviews/showReviews.php" class="w3-bar-item w3-button">All Reviews</a>
+                     <a href="reviews/editReview.php" class="w3-bar-item w3-button">Edit Review</a>
+                     <a href="reviews/deleteReview.php" class="w3-bar-item w3-button">Delete Review</a>
+                     <a href="reviews/viewReview.php" class="w3-bar-item w3-button">By Movie</a>
+                 </div>
+        </div>
+
+
         <a href="login.php" class="w3-bar-item w3-button w3-right w3-hover-cyan">Login</a>
         <a href="register.php" class="w3-bar-item w3-button w3-right w3-hover-cyan">Register</a>
     </div>
