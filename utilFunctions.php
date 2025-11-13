@@ -15,4 +15,14 @@ function searchMovies() {
         window.location.href = 'search.php?q=' + encodeURIComponent(searchTerm);
     }
 }
+
+function addToWatchlist(movieId) {
+    window.location.href = 'addToWatchlist.php?movie_id=' + movieId;
+}
+
+function removeFromWatchlist(movieId) {
+    if(confirm('Remove this movie from your watchlist?')) {
+        window.location.href = 'removeFromWatchlist.php?movie_id=' + movieId;
+    }
+}
 </script>
