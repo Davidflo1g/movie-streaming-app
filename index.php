@@ -1,10 +1,17 @@
 <?php
+session_start();
+
+// Prevent caching - stops back button after logout
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 include "utilFunctions.php";
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MOVIE - Movie Streaming</title>
+    <title>MovieFlix - Movie Streaming</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
@@ -34,7 +41,11 @@ include "utilFunctions.php";
         
         <div class="hero-section">
             <div class="search-box">
-                <h1>Welcome to MOVIE</h1>
+                <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
+                    <h1>Welcome back, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</h1>
+                <?php else: ?>
+                    <h1>Welcome to MovieFlix</h1>
+                <?php endif; ?>
                 <p>Stream thousands of movies and TV shows</p>
                 <input type="text" class="w3-input w3-border w3-round-large" placeholder="Search movies, actors, genres..." style="width: 400px; display: inline-block;">
                 <button class="w3-button w3-cyan w3-round-large">Search</button>
