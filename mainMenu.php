@@ -7,7 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <div class="w3-container w3-black">
     <div class="w3-bar w3-theme-d5">
         <a href="index.php" class="w3-bar-item w3-button w3-hover-cyan">
-            <strong>MovieFlix</strong>
+            <img src="images/logo.png" style="height: 80px; width: 250px; vertical-align: middle;">
         </a>
         
         <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
