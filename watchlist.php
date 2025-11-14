@@ -39,7 +39,7 @@ $genre_mapping = [
             background-color: #000;
         }
         .movie-card {
-            height: 650px;
+            height: auto; /* Changed to auto to accommodate full description */
             display: flex;
             flex-direction: column;
         }
@@ -55,6 +55,12 @@ $genre_mapping = [
             font-size: 12px;
             color: #ccc;
             margin-top: 5px;
+        }
+        .movie-description {
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 10px 0;
+            color: #e0e0e0;
         }
     </style>
 </head>
@@ -100,7 +106,7 @@ $genre_mapping = [
                     echo "      <h4>" . $row['title'] . " (" . $row['release_year'] . ")</h4>";
                     echo "      <p><strong>Genre:</strong> " . $movie_genre . "</p>";
                     echo "      <p class='actor-list'><strong>Starring:</strong> " . (isset($row['actors']) ? $row['actors'] : 'No actors listed') . "</p>";
-                    echo "      <p class='w3-small'>" . (isset($row['description']) ? substr($row['description'], 0, 100) . "..." : "No description available") . "</p>";
+                    echo "      <p class='movie-description'>" . (isset($row['description']) ? $row['description'] : "No description available") . "</p>";
                     echo "      <p class='w3-tiny'>Added: " . $row['date_added'] . "</p>";
                     echo "      <div class='w3-row'>";
                     echo "        <div class='w3-half'>";
