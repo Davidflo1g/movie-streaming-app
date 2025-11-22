@@ -1,13 +1,13 @@
 <?php
-include "utilFunctions.php";
-include "connectDatabase.php";
+    include "utilFunctions.php";
+    include "connectDatabase.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show Movies</title>
+    <title>MovieFlix - All Movies</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
@@ -26,10 +26,10 @@ include "connectDatabase.php";
                 <th>Title</th>
                 <th>Genre</th>
                 <th>Release Year</th>
-                <th>Duration (in seconds)</th>
                 <th>Director</th>
                 <th>Actors</th>
                 <th>Trailer</th>
+                <th>Poster</th>
             </tr>
             <?php
                 $sql = "SELECT 
@@ -37,9 +37,9 @@ include "connectDatabase.php";
                             m.title, 
                             g.genre_name, 
                             m.release_year, 
-                            m.secs, 
                             m.director, 
                             m.trailer_source,
+                            m.movie_image,
                             GROUP_CONCAT(a.actor_name SEPARATOR ', ') AS actors
                         FROM movies m
                         LEFT JOIN genres g ON m.genre_id = g.genre_id
@@ -47,9 +47,7 @@ include "connectDatabase.php";
                         LEFT JOIN actors a ON ma.actor_id = a.actor_id
                         GROUP BY m.movie_id
                         ORDER BY m.movie_id ASC";
-
                 $result = $conn->query($sql);
-
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
@@ -57,12 +55,12 @@ include "connectDatabase.php";
                         echo "<td class='w3-text-black'>{$row['title']}</td>";
                         echo "<td class='w3-text-black'>{$row['genre_name']}</td>";
                         echo "<td class='w3-text-black'>{$row['release_year']}</td>";
-                        echo "<td class='w3-text-black'>{$row['secs']}</td>";
                         echo "<td class='w3-text-black'>{$row['director']}</td>";
-                        // Display all actor names for this movie
+
                         $actors = !empty($row['actors']) ? $row['actors'] : "<i>No actors linked</i>";
                         echo "<td class='w3-text-black'>{$actors}</td>";
                         echo "<td class='w3-text-blue'><a href='{$row['trailer_source']}' target='_blank'>Watch Trailer</a></td>";
+                        echo "<td class='w3-text-black'><img src='{$row['movie_image']}' alt='Poster' style='height:100px;'></td>";
                         echo "</tr>";
                     }
                 } else {

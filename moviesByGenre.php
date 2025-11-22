@@ -7,7 +7,7 @@ include "utilFunctions.php";
 
 <head>
     <meta charset="UTF-8">
-    <title>Movies by Genre</title>
+    <title>MovieFlix - Movies by Genre</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 
@@ -17,38 +17,28 @@ include "utilFunctions.php";
 
 <div class="w3-container w3-center">
     <h2>Movies by Genre</h2>
-
-    <!-- Genre Selection -->
     <form method="POST">
         <select name="genre_id" class="w3-select w3-border w3-margin" required>
             <option value="" disabled selected>Select a Genre</option>
-
             <?php
-            $genres = $conn->query("
-                SELECT genre_id, genre_name
-                FROM genres
-                ORDER BY genre_name
-            ");
-
-            while ($g = $genres->fetch_assoc()) {
-                echo "<option value='{$g['genre_id']}'>
-                        {$g['genre_id']} | {$g['genre_name']}
-                      </option>";
-            }
+                $genres = $conn->query("
+                    SELECT genre_id, genre_name
+                    FROM genres
+                    ORDER BY genre_name
+                ");
+                while ($g = $genres->fetch_assoc()) {
+                    echo "<option value='{$g['genre_id']}'>
+                            {$g['genre_id']} | {$g['genre_name']}
+                        </option>";
+                }
             ?>
         </select>
-
         <button class="w3-button w3-black">Show Movies</button>
     </form>
-
     <br>
-
     <?php
     if (isset($_POST['genre_id'])) {
-
         $id = intval($_POST['genre_id']);
-
-        // Fetch genre name
         $genreQuery = $conn->prepare("
             SELECT genre_name 
             FROM genres 
@@ -60,14 +50,12 @@ include "utilFunctions.php";
 
         echo "<h3 class='w3-margin-top'>Showing all <b>$genreName</b> movies:</h3>";
 
-        // Fetch movies + duration + actors
         $sql = "
             SELECT 
                 m.movie_id,
                 m.title,
                 m.director,
                 m.release_year,
-                m.secs,
                 g.genre_name,
                 GROUP_CONCAT(DISTINCT a.actor_name SEPARATOR ', ') AS actors
             FROM movies m
@@ -80,46 +68,32 @@ include "utilFunctions.php";
         ";
 
         $movies = $conn->query($sql);
-
         if ($movies->num_rows > 0) {
-
             echo "
             <table class='w3-table-all w3-hoverable w3-margin-top'>
                 <tr class='w3-black'>
                     <th>Title</th>
                     <th>Genre</th>
                     <th>Release Year</th>
-                    <th>Duration</th>
                     <th>Director</th>
                     <th>Actors</th>
                     <th>Options</th>
                 </tr>
             ";
-
             while ($m = $movies->fetch_assoc()) {
-
-                // Format mm:ss
-                $minutes = floor($m['secs'] / 60);
-                $seconds = str_pad($m['secs'] % 60, 2, '0', STR_PAD_LEFT);
-                $duration = "$minutes:$seconds";
-
                 $actorList = $m['actors'] ?: "No actors listed";
-
                 echo "
                 <tr>
                     <td>{$m['title']}</td>
                     <td>{$m['genre_name']}</td>
                     <td>{$m['release_year']}</td>
-                    <td>{$duration}</td>
                     <td>{$m['director']}</td>
                     <td>{$actorList}</td>
-
                     <td>
                         <a class='w3-button w3-cyan w3-small'
-                           href='watchMovie.php?id={$m['movie_id']}'>
+                           onclick='playMovie({$m['movie_id']})'>
                            Play
                         </a>
-
                         <button class='w3-button w3-green w3-small'
                                 onclick='addToWatchlist({$m['movie_id']})'>
                                 + Watchlist
@@ -127,16 +101,12 @@ include "utilFunctions.php";
                     </td>
                 </tr>";
             }
-
             echo "</table>";
-
         } else {
             echo "<p>No movies found for the <b>$genreName</b> genre.</p>";
         }
     }
     ?>
-
 </div>
-
 </body>
 </html>

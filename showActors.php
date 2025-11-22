@@ -1,19 +1,17 @@
 <?php
-include "utilFunctions.php";
-include "connectDatabase.php";
+    include "utilFunctions.php";
+    include "connectDatabase.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show Actors</title>
+    <title>MovieFlix - All Actors</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
-
 <body>
     <div class="w3-container w3-black">
         <?php include "movieAdminMainMenu.php"; ?>
@@ -46,7 +44,6 @@ include "connectDatabase.php";
                                         GROUP BY a.actor_id
                                         ORDER BY a.actor_id ASC;
                                     ");
-
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
@@ -54,11 +51,10 @@ include "connectDatabase.php";
                         echo "<td class='w3-text-black'>{$row['actor_name']}</td>";
                         echo "<td class='w3-text-black'>{$row['bio']}</td>";
                         echo "<td class='w3-text-black'>{$row['birth_year']}</td>";
-                        // Display movies linked to this actor
+                        
                         $movies = !empty($row['movies']) ? $row['movies'] : "<i>No movies linked</i>";
                         echo "<td class='w3-text-black'>{$movies}</td>";
 
-                        // Display photo if available
                         $photo = !empty($row['photo_url'])
                             ? "<img src='{$row['photo_url']}' style='width:100px;height:auto;border-radius:5px;'>"
                             : "<i>No photo</i>";
@@ -68,12 +64,10 @@ include "connectDatabase.php";
                 } else {
                     echo "<tr><td colspan='5' class='w3-text-black w3-center'>No actors found.</td></tr>";
                 }
-
                 $conn->close();
                 ?>
             </table>
         </div>
     </div>
 </body>
-
 </html>

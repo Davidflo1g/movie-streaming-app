@@ -1,52 +1,38 @@
 <?php 
-include "connectDatabase.php"; 
-include "utilFunctions.php";
+    include "connectDatabase.php"; 
+    include "utilFunctions.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>Movies by Actor</title>
+    <title>MovieFlix - Movies by Actor</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
-
 <body class="w3-light-grey">
-
 <?php include "mainMenu.php"; ?>
-
 <div class="w3-container w3-center">
     <h2>Movies by Actor</h2>
-
-    <!-- Actor Selection -->
     <form method="POST">
         <select name="actor_id" class="w3-select w3-border w3-margin" required>
             <option value="" disabled selected>Select an Actor</option>
-
             <?php
             $actors = $conn->query("
                 SELECT actor_id, actor_name
                 FROM actors
                 ORDER BY actor_name
             ");
-
             while ($a = $actors->fetch_assoc()) {
                 echo "<option value='{$a['actor_id']}'>{$a['actor_name']}</option>";
             }
             ?>
         </select>
-
         <button class="w3-button w3-black">Show Movies</button>
     </form>
-
     <br>
-
     <?php
     if (isset($_POST['actor_id'])) {
-
         $actor_id = intval($_POST['actor_id']);
-
-        // Fetch actor name
         $actorQuery = $conn->prepare("
             SELECT actor_name 
             FROM actors 
@@ -58,7 +44,6 @@ include "utilFunctions.php";
 
         echo "<h3 class='w3-margin-top'>Showing movies starring <b>$actorName</b>:</h3>";
 
-        // Pull full movie details + other actors
         $query = "
             SELECT 
                 m.movie_id,
@@ -66,7 +51,6 @@ include "utilFunctions.php";
                 m.director,
                 m.release_year,
                 g.genre_name,
-                m.secs,
                 GROUP_CONCAT(DISTINCT a.actor_name SEPARATOR ', ') AS actors
             FROM movie_actors ma
             JOIN movies m ON ma.movie_id = m.movie_id
@@ -79,29 +63,19 @@ include "utilFunctions.php";
         ";
 
         $movies = $conn->query($query);
-
         if ($movies->num_rows > 0) {
-
             echo "
             <table class='w3-table-all w3-hoverable w3-margin-top'>
                 <tr class='w3-black'>
                     <th>Title</th>
                     <th>Genre</th>
                     <th>Release Year</th>
-                    <th>Duration</th>
                     <th>Director</th>
                     <th>Actors</th>
                     <th>Options</th>
                 </tr>
             ";
-
             while ($m = $movies->fetch_assoc()) {
-
-                // Format duration mm:ss
-                $minutes = floor($m['secs'] / 60);
-                $seconds = str_pad($m['secs'] % 60, 2, '0', STR_PAD_LEFT);
-                $duration = "$minutes:$seconds";
-
                 $actorList = $m['actors'] ?: "No actors listed";
 
                 echo "
@@ -109,16 +83,13 @@ include "utilFunctions.php";
                     <td>{$m['title']}</td>
                     <td>{$m['genre_name']}</td>
                     <td>{$m['release_year']}</td>
-                    <td>{$duration}</td>
                     <td>{$m['director']}</td>
                     <td>{$actorList}</td>
-
                     <td>
                         <a class='w3-button w3-cyan w3-small'
-                           href='watchMovie.php?id={$m['movie_id']}'>
+                           onclick='playMovie({$m['movie_id']})'>
                            Play
                         </a>
-
                         <button class='w3-button w3-green w3-small'
                                 onclick='addToWatchlist({$m['movie_id']})'>
                                 + Watchlist
@@ -126,16 +97,12 @@ include "utilFunctions.php";
                     </td>
                 </tr>";
             }
-
             echo "</table>";
-
         } else {
             echo "<p>No movies found for <b>$actorName</b>.</p>";
         }
     }
     ?>
-
 </div>
-
 </body>
 </html>

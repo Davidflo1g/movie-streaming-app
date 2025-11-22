@@ -7,7 +7,7 @@ include "connectDatabase.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Genre</title>
+    <title>MovieFlix - Edit Genre</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
@@ -36,7 +36,6 @@ include "connectDatabase.php";
             </select>
         </fieldset>
     </form>
-
     <?php
     if (isset($_POST['genre_id'])) {
         $genre_id = mysqli_real_escape_string($conn, $_POST['genre_id']);
@@ -56,13 +55,10 @@ include "connectDatabase.php";
         </form>
     <?php
     }
-
     if (isset($_POST['update'])) {
         $id = mysqli_real_escape_string($conn, $_POST['genre_id']);
         $name = mysqli_real_escape_string($conn, trim($_POST['genre_name']));
-
         $update = "UPDATE genres SET genre_name='$name' WHERE genre_id='$id'";
-
         if ($conn->query($update)) {
             echo "<div class='w3-panel w3-green w3-round-large w3-margin-top'>
                     <h3>Success!</h3>

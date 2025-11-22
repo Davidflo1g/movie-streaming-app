@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unassign Actor from Movie</title>
+    <title>MovieFlix - Unassign Actor from Movie</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
@@ -16,12 +16,9 @@
             <h1><b>MovieFlix</b></h1>
             <h2>Unassign Actor from Movie</h2>
         </header>
-
         <form method="POST" class="w3-container w3-light-grey">
             <fieldset>
                 <legend class="w3-large w3-center w3-text-theme"><b>Unassign Details</b></legend>
-
-                <!-- Select Movie -->
                 <label>Select Movie</label>
                 <select name="movie_id" class="w3-select w3-border" required onchange="this.form.submit()">
                     <option value="" disabled selected>Choose a Movie</option>
@@ -35,8 +32,6 @@
                         $conn->close();
                     ?>
                 </select>
-
-                <!-- Select Actor (populated only if movie selected) -->
                 <?php
                 if (isset($_POST['movie_id'])) {
                     include "connectDatabase.php";
@@ -61,19 +56,13 @@
             </fieldset>
             <br><input type="submit" name="unassign" class="w3-btn w3-black" value="Unassign Actor">
         </form>
-
-        <!-- Result Message -->
         <div class="w3-container w3-grey">
             <?php
             if (isset($_POST['unassign'])) {
                 include "connectDatabase.php";
-
                 $movie_id = mysqli_real_escape_string($conn, $_POST['movie_id']);
                 $actor_id = mysqli_real_escape_string($conn, $_POST['actor_id']);
-
-                // Check if relationship exists
                 $check = $conn->query("SELECT * FROM movie_actors WHERE movie_id = '$movie_id' AND actor_id = '$actor_id'");
-
                 if ($check->num_rows === 0) {
                     echo "<b>This actor is not currently assigned to that movie.</b>";
                 } else {

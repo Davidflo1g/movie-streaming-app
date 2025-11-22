@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete Actor</title>
+    <title>MovieFlix - Delete Actor</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
@@ -19,14 +19,12 @@
         <form method="POST" class="w3-container w3-light-grey">
             <fieldset>
                 <legend class="w3-large w3-center w3-text-theme"><b>Actor Deletion</b></legend>
-
                 <label>Select Actor to Delete</label>
                 <select name="actor_id" class="w3-select w3-border" required>
                     <option value="" disabled selected>Choose an Actor</option>
                     <?php
                         include "connectDatabase.php";
                         $actors = $conn->query("SELECT actor_id, actor_name FROM actors ORDER BY actor_id ASC");
-
                         if ($actors->num_rows > 0) {
                             while ($actor = $actors->fetch_assoc()) {
                                 echo "<option value='{$actor['actor_id']}'>{$actor['actor_id']} | {$actor['actor_name']}</option>";
@@ -40,15 +38,11 @@
             </fieldset>
             <br><input type="submit" name="submit" class="w3-btn w3-black" value="Delete Actor">
         </form>
-
         <div class="w3-container w3-light-grey">
             <?php
                 if (isset($_POST['submit'])) {
                     include "connectDatabase.php";
-
                     $actor_id = mysqli_real_escape_string($conn, $_POST['actor_id']);
-
-                    // Check if the actor is linked to any movies
                     $checkMovies = $conn->query("SELECT * FROM movie_actors WHERE actor_id = '$actor_id'");
                     if ($checkMovies->num_rows > 0) {
                         echo "<div class='w3-panel w3-yellow w3-round-large'>
@@ -56,7 +50,6 @@
                                 Please remove the movie associations first before deleting.
                               </div>";
                     } else {
-                        // Safe to delete
                         $deleteActor = "DELETE FROM actors WHERE actor_id = '$actor_id'";
                         if ($conn->query($deleteActor) === TRUE) {
                             echo "<div class='w3-panel w3-green w3-round-large'>
@@ -69,7 +62,6 @@
                                   </div>";
                         }
                     }
-
                     $conn->close();
                 }
             ?>

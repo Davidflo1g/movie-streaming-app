@@ -1,11 +1,10 @@
 <?php include "utilFunctions.php"; ?>
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete Movie</title>
+    <title>MovieFlix - Delete Movie</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
@@ -31,10 +30,7 @@
                     if ($movies->num_rows > 0) {
                         while ($m = $movies->fetch_assoc()) {
                             $selected = (isset($_POST['movie_id']) && $_POST['movie_id'] == $m['movie_id']) ? "selected" : "";
-
-                            // Format: "1 | Weapons (2024) by Alex Garland"
                             $display = "{$m['movie_id']} | {$m['title']} ({$m['release_year']}) by {$m['director']}";
-
                             echo "<option value='{$m['movie_id']}' $selected>$display</option>";
                         }
                     } else {
@@ -46,15 +42,11 @@
         </fieldset>
         <br><input type="submit" name="submit" class="w3-btn w3-black" value="Delete Movie">
     </form>
-
     <div class="w3-container w3-light-grey">
         <?php
             if (isset($_POST['submit'])) {
                 include "connectDatabase.php";
-
                 $movie_id = mysqli_real_escape_string($conn, $_POST['movie_id']);
-
-                // Check if movie is linked to actors
                 $check = $conn->query("SELECT * FROM movie_actors WHERE movie_id = '$movie_id'");
                 if ($check->num_rows > 0) {
                     echo "<div class='w3-panel w3-yellow w3-round-large'>
@@ -74,7 +66,6 @@
                               </div>";
                     }
                 }
-
                 $conn->close();
             }
         ?>

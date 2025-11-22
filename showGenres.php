@@ -1,13 +1,13 @@
 <?php
-include "utilFunctions.php";
-include "connectDatabase.php";
+    include "utilFunctions.php";
+    include "connectDatabase.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show Genres</title>
+    <title>MovieFlix - Show Genres</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
@@ -27,7 +27,6 @@ include "connectDatabase.php";
             </tr>
             <?php
                 $result = $conn->query("SELECT * FROM genres ORDER BY genre_name ASC");
-
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>
@@ -38,7 +37,6 @@ include "connectDatabase.php";
                 } else {
                     echo "<tr><td colspan='2' class='w3-text-black w3-center'>No genres found.</td></tr>";
                 }
-
                 $conn->close();
             ?>
         </table>
