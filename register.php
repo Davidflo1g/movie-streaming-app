@@ -92,12 +92,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     mysqli_close($link);
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sign Up - MovieFlix</title>
+    <title>MovieFlix - Register</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
@@ -111,35 +110,29 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body class="w3-theme-d1">
     <?php include 'mainMenu.php'; ?>
-
     <div class="register-container w3-card-4 w3-theme-d3">
-        <h2 class="w3-center">Sign Up for MovieFlix</h2>
+        <h2 class="w3-center">Register for MovieFlix</h2>
         <p class="w3-center">Please fill this form to create an account.</p>
-        
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="w3-container <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                 <label>Username</label>
                 <input type="text" name="username" class="w3-input w3-border" value="<?php echo $username; ?>">
                 <span class="w3-text-red"><?php echo $username_err; ?></span>
             </div>
-            
             <div class="w3-container <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
                 <label>Password</label>
                 <input type="password" name="password" class="w3-input w3-border" value="<?php echo $password; ?>">
                 <span class="w3-text-red"><?php echo $password_err; ?></span>
             </div>
-            
             <div class="w3-container <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
                 <label>Confirm Password</label>
                 <input type="password" name="confirm_password" class="w3-input w3-border" value="<?php echo $confirm_password; ?>">
                 <span class="w3-text-red"><?php echo $confirm_password_err; ?></span>
             </div>
-            
             <div class="w3-container w3-margin-top">
-                <input type="submit" class="w3-button w3-cyan w3-block" value="Sign Up">
+                <input type="submit" class="w3-button w3-cyan w3-block" value="Register">
                 <input type="reset" class="w3-button w3-gray w3-block w3-margin-top" value="Reset">
             </div>
-            
             <p class="w3-center w3-margin-top">Already have an account? <a href="login.php" class="w3-text-cyan">Login here</a>.</p>
         </form>
     </div>
