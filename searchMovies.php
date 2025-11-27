@@ -48,7 +48,6 @@
                     <th>Title</th>
                     <th>Genre</th>
                     <th>Release Year</th>
-                    <th>Duration</th>
                     <th>Director</th>
                     <th>Actors</th>
                     <th>Options</th>
@@ -60,7 +59,6 @@
                     <td>{$row['title']}</td>
                     <td>{$row['genre_name']}</td>
                     <td>{$row['release_year']}</td>
-                    <td>{$duration}</td>
                     <td>{$row['director']}</td>
                     <td>{$actorList}</td>
                     <td>
@@ -83,4 +81,5 @@
     ?>
 </div>
 </body>
+
 </html>
