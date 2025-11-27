@@ -43,12 +43,12 @@
                   </tr>";
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
-                echo "<td>" . htc($row['review_id']) . "</td>";
-                echo "<td>" . htc($row['movie_title']) . "</td>";
-                echo "<td>" . htc($row['reviewer']) . "</td>";
-                echo "<td>" . htc($row['rating']) . "</td>";
-                echo "<td>" . htc($row['review_text']) . "</td>";
-                echo "<td>" . htc($row['review_date']) . "</td>";
+                echo "<td class='w3-text-black'>" . htc($row['review_id']) . "</td>";
+                echo "<td class='w3-text-black'>" . htc($row['movie_title']) . "</td>";
+                echo "<td class='w3-text-black'>" . htc($row['reviewer']) . "</td>";
+                echo "<td class='w3-text-black'>" . htc($row['rating']) . "</td>";
+                echo "<td class='w3-text-black'>" . htc($row['review_text']) . "</td>";
+                echo "<td class='w3-text-black'>" . htc($row['review_date']) . "</td>";
                 echo "</tr>";
             }
             echo "</table>";
